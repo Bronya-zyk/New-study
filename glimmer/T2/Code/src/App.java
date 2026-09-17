@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 public class App {
     public static void main(String[] args) throws Exception {
         int a=0,sum=0,tot=0;
-        try(FileInputStream fis = new FileInputStream("glimmer/T2/Code/data.txt");) {
+        try(FileInputStream fis = new FileInputStream("微光glimmer/T2/Code/data.txt");) {
             int flag=0;
             while((a=fis.read())!=-1){
                 if((char)a=='\n'||(char)a=='\r') continue;
