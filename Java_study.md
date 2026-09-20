@@ -110,3 +110,24 @@ try/*(IO流，无需关闭)*/{
 }
 ```
 
+### StringBuilder
+
+vector版string
+
+`append`添加字符
+
+`tosString`转换为string
+
+`setLength(0)`清空
+
+`delete(a,b)`删除$[a,b)$的字符
+
+`reverse`反转
+
+## Integer
+
+string转int
+
+是一个静态类可以直接调用，不用new对象
+
+错误返回`NumberFormatException`
