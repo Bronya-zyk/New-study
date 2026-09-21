@@ -131,3 +131,79 @@ string转int
 是一个静态类可以直接调用，不用new对象
 
 错误返回`NumberFormatException`
+
+## Stream流
+
+### List：类似vector数组
+
+| 方法                  | 作用                             |
+| --------------------- | -------------------------------- |
+| `add(E e)`            | 末尾添加元素                     |
+| `add(int index, E e)` | 在下标 index 插入元素            |
+| `get(int index)`      | 按下标获取元素                   |
+| `set(int index, E e)` | 修改下标位置的元素，返回旧值     |
+| `remove(int index)`   | 按下标删除元素，返回被删元素     |
+| `remove(Object o)`    | 删除第一个匹配的元素             |
+| `size()`              | 返回集合元素个数                 |
+| `isEmpty()`           | 判断是否为空                     |
+| `contains(Object o)`  | 判断是否包含该元素               |
+| `clear()`             | 清空所有元素                     |
+| `stream()`            | 转成 Stream 流（你前面写的过滤） |
+
+### set：集合
+
+| 方法                 | 作用                                   |
+| -------------------- | -------------------------------------- |
+| `add(E e)`           | 添加元素；重复元素添加失败，返回 false |
+| `remove(Object o)`   | 删除指定元素                           |
+| `size()`             | 元素个数                               |
+| `isEmpty()`          | 是否为空                               |
+| `contains(Object o)` | 是否包含元素                           |
+| `clear()`            | 清空                                   |
+| `stream()`           | 转 Stream 流                           |
+
+### map：哈希键值对
+
+| 方法                                  | 作用                                               |
+| ------------------------------------- | -------------------------------------------------- |
+| `put(K key, V value)`                 | 存入键值对；key 重复会覆盖旧 value                 |
+| `get(K key)`                          | 根据 key 获取 value；找不到返回 null               |
+| `getOrDefault(K key, V defaultValue)` | 取 key 的值，找不到返回默认值（推荐）              |
+| `remove(K key)`                       | 根据 key 删除整组键值对                            |
+| `containsKey(K key)`                  | 判断是否存在这个 key                               |
+| `containsValue(V value)`              | 判断是否存在这个 value                             |
+| `size()`                              | 键值对数量                                         |
+| `isEmpty()`                           | 是否为空                                           |
+| `clear()`                             | 清空 map                                           |
+| `keySet()`                            | 返回所有 key 组成的 Set 集合                       |
+| `values()`                            | 返回所有 value 组成的 Collection                   |
+| `entrySet()`                          | 返回所有键值对`Map.Entry`的 Set，用于遍历 + Stream |
+
+> `copyof()`  返回一个不可变Map/List/Set
+
+### main
+
+中间
+
+| 方法         | 作用                         | 示例                                                  |
+| ------------ | ---------------------------- | ----------------------------------------------------- |
+| `filter()`   | 过滤，保留返回 true 的元素   | `.filter(s -> s.getScore() >=60)`                     |
+| `map()`      | 映射：把元素转换成另一种类型 | `.map(Student::getName)` Student → String 名字        |
+| `sorted()`   | 排序                         | `.sorted(Comparator.comparingInt(Student::getScore))` |
+| `distinct()` | 去重（依靠 equals/hashCode） | `.distinct()`                                         |
+| `limit(n)`   | 只取前 n 个元素              | `.limit(3)`                                           |
+| `skip(n)`    | 跳过前 n 个                  | `.skip(2)`                                            |
+| `peek()`     | 遍历查看元素（调试打印）     | `.peek(s->System.out.println(s))`                     |
+
+终止操作
+
+| 方法                                    | 作用                             |
+| --------------------------------------- | -------------------------------- |
+| `collect(Collectors.toList())`          | 收集成 List（你之前写的）        |
+| `collect(Collectors.toSet())`           | 收集成 Set，自动去重             |
+| `collect(Collectors.toMap(key,value))`  | 收集成 Map                       |
+| `forEach()`                             | 遍历每一个元素                   |
+| `count()`                               | 统计元素数量，返回 long          |
+| `max() / min()`                         | 找最大 / 最小元素，返回 Optional |
+| `sum()`                                 | 求和（需要`mapToInt`转成数值流） |
+| `anyMatch() / allMatch() / noneMatch()` | 匹配判断，返回 boolean           |

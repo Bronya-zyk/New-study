@@ -1,37 +1,47 @@
-
+package com.Example;
 import java.io.FileInputStream;
 import java.io.IOException;
-
+import com.Example.tool.EmptyFileException;
+import com.Example.tool.TestFile;
 public class App {
     public static void main(String[] args) throws Exception {
-        try(FileInputStream fis = new FileInputStream("glimmer/T2/Code/data.txt");) {
-            int flag=0,a=0,sum=0,tot=0;
+        try(FileInputStream fis = new FileInputStream("Code/data.txt");) {
+            TestFile.readFile("Code/data.txt");
+            int a=0,sum=0,tot=0;
             StringBuilder s = new StringBuilder();
             while((a=fis.read())!=-1){
                 char c=(char)a;
-                if (s.length() > 0) {//容易忽略多次换行
+                if (c=='\n'||c=='\r') {//容易忽略多次换行
+                    if(s.length()==0) continue; // 忽略空行
                     String line = s.toString();
                     int val = Integer.parseInt(line);
                     sum+=val;
                     tot++;
                     s.setLength(0); // 清空缓冲区，准备读取下一行
                 }
-                sum+=a-'0';
+                else {
+                    if(c<'0'||c>'9') {
+                        throw new NumberFormatException("文件中包含非数字字符");
+                    }
+                    s.append(c);
+                }
+            }
+            if(s.length()!=0) {
+                int val = Integer.parseInt(s.toString());
+                sum+=val;
                 tot++;
-                flag=1;
+                s.setLength(0); // 清空缓冲区，准备读取下一行
             }
-            switch(flag){
-                case 1->System.out.printf("Sum: %lf", (double)sum/tot);
-                case 0->System.out.printf("文件为空");
-            }
-        }catch (IOException e) {
-            // IO异常：文件不存在 / 文件打开失败，进入这个catch
-            System.out.println("文件读取失败");
-        } catch (NumberFormatException e) {
-            // 捕获数字解析异常，防止程序崩溃
-            System.out.println("输入不规范");
-        } finally {
-            // finally块：无论是否发生异常，代码一定会执行
+            System.out.printf("Sum: %f", (double)sum/tot);
+        } catch (EmptyFileException e) {
+            System.out.println("捕获到空文件异常：" + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(NumberFormatException e) {
+            System.out.println("捕获到数字格式异常：" + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("捕获到其他异常：" + e.getMessage());
+        }finally {
             System.out.println("程序结束");
         }
     }
