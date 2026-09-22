@@ -1,4 +1,4 @@
-package com.Example.tool;
+package glimmer.T1.tool;
 
 public class Print {
     public static void put(String arr) {

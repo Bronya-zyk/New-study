@@ -1,4 +1,4 @@
-package com.Example.tool;
+package glimmer.T2.EmptyFileException;
 
 import java.io.File;
 import java.io.FileInputStream;

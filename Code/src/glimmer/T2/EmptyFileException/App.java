@@ -1,8 +1,6 @@
-package com.Example;
+package glimmer.T2.EmptyFileException;
 import java.io.FileInputStream;
 import java.io.IOException;
-import com.Example.tool.EmptyFileException;
-import com.Example.tool.TestFile;
 public class App {
     public static void main(String[] args) throws Exception {
         try(FileInputStream fis = new FileInputStream("Code/data.txt");) {
@@ -33,8 +31,6 @@ public class App {
                 s.setLength(0); // 清空缓冲区，准备读取下一行
             }
             System.out.printf("Sum: %f", (double)sum/tot);
-        } catch (EmptyFileException e) {
-            System.out.println("捕获到空文件异常：" + e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         } catch(NumberFormatException e) {

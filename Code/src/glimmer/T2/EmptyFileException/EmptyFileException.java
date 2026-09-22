@@ -1,4 +1,4 @@
-package com.Example.tool;
+package glimmer.T2.EmptyFileException;
 
 public class EmptyFileException extends Exception {
     public EmptyFileException() {

@@ -1,4 +1,4 @@
-package com.Example.Stream;
+package glimmer.T2.Stream;
 
 public class Student {
     String name;
