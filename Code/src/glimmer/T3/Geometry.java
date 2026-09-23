@@ -84,5 +84,6 @@ public class Geometry {
             getsc.gets();
             getsc.getc();
         }
+        sc.close();
     }
 }

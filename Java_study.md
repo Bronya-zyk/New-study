@@ -124,15 +124,13 @@ vector版string
 
 `reverse`反转
 
-## Integer
 
-string转int
 
-是一个静态类可以直接调用，不用new对象
 
-错误返回`NumberFormatException`
 
-## Stream流
+
+
+## 集合
 
 ### List：类似vector数组
 
@@ -162,6 +160,10 @@ string转int
 | `clear()`            | 清空                                   |
 | `stream()`           | 转 Stream 流                           |
 
+TreeSet利用红黑树实现（想你了STL）
+
+HashSet为哈希表
+
 ### map：哈希键值对
 
 | 方法                                  | 作用                                               |
@@ -179,9 +181,13 @@ string转int
 | `values()`                            | 返回所有 value 组成的 Collection                   |
 | `entrySet()`                          | 返回所有键值对`Map.Entry`的 Set，用于遍历 + Stream |
 
+TreeMap利用红黑树实现（想你了STL）
+
+HasMapt为哈希表
+
 > `copyof()`  返回一个不可变Map/List/Set
 
-### main
+# Stream流
 
 中间
 
@@ -208,9 +214,11 @@ string转int
 | `sum()`                                 | 求和（需要`mapToInt`转成数值流） |
 | `anyMatch() / allMatch() / noneMatch()` | 匹配判断，返回 boolean           |
 
-## 继承与接口
+# 继承与接口
 
 接口弥补了java单继承的不足
+
+承诺必须重写抽象方法
 
 多个接口有相同命名，相同参数，且有代码实现的方法，那么会报错
 
@@ -219,6 +227,12 @@ string转int
 父类方法调用优先级大于接口方法
 
 # Integer
+
+转int
+
+是一个静态类可以直接调用，不用new对象
+
+错误返回`NumberFormatException`
 
 List，set，map只支持包装类，所以把int转换为integer
 
@@ -243,4 +257,179 @@ Integer d=200;
 for(auto x:arr)
 
 注意遍历时不能改变集合
+
+
+
+# 内部类
+
+定义在另一个类地内部
+
+内部类不能有静态方法和变量
+
+# 静态内部类
+
+也叫嵌套类
+
+加了 `static` 的内部类，属于外部类本身，不属于外部类实例
+
+1. 静态内部类**不能直接访问外部类非 static 成员**，只能访问静态成员
+2. 创建对象不需要外部类实例：`外部类.静态内部类 对象 = new 外部类.静态内部类();`
+
+# 局部内部类
+
+定义在方法里面，作用范围仅限当前这个方法。
+
+Java8 起，可以访问方法里的局部变量
+
+# 匿名内部类
+
+现场重写，只用一次（只用在这个对象）
+
+```java
+// 一个接口
+interface Animal {
+    void cry();
+}
+
+public class Test {
+    public static void main(String[] args) {
+        // 匿名内部类：new 接口，同时写实现代码
+        Animal cat = new Animal() {
+            @Override
+            public void cry() {
+                System.out.println("喵喵");
+            }
+        };
+        cat.cry();
+    }
+}
+```
+
+# 函数式接口
+
+- `Consumer<T>`：消费，**入参 T，无返回**
+- `Supplier<T>`：供给，**无入参，返回 T**
+- `Predicate<T>`：断言，**入参 T，返回 boolean**
+- `Function<T,R>`：转换，**入参 T，返回 R**
+
+```java
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.function.Predicate;
+import java.util.function.Function;
+
+public class LambdaDemo {
+    public static void main(String[] args) {
+        // Consumer<T>：接收T，无返回 void accept(T)
+        Consumer<Integer> consumer = num -> System.out.println(num);
+        consumer.accept(100);
+
+        // Supplier<T>：无参数，返回T T get()
+        Supplier<String> supplier = () -> "hello";
+        System.out.println(supplier.get());
+
+        // Predicate<T>：接收T，返回boolean boolean test(T)
+        Predicate<Integer> predicate = n -> n > 0;
+        System.out.println(predicate.test(5));
+
+        // Function<T,R>：接收T，返回R R apply(T)
+        Function<String, Integer> func = str -> str.length();
+        System.out.println(func.apply("abc"));
+    }
+}
+```
+
+# Lambda
+
+```
+// 完整写法
+Consumer<String> c1 = (String s) -> { System.out.println(s); };
+
+// 简写1：省略参数类型
+Consumer<String> c2 = (s) -> { System.out.println(s); };
+
+// 简写2：单个参数，去掉小括号
+Consumer<String> c3 = s -> { System.out.println(s); };
+
+// 简写3：一行代码，去掉大括号
+Consumer<String> c4 = s -> System.out.println(s);
+```
+
+**Consumer只有一个抽象方法**
+
+# .foreach
+
+内部式consumer接口，对每个consumer执行accept
+
+```java
+list.forEach(new Consumer<String>() {
+    @Override
+    public void accept(String s) {
+    	System.out.println(s);
+    }
+});
+
+// 写法2：Lambda简化（Consumer是函数式接口）
+list.forEach(s -> System.out.println(s));
+```
+
+# 泛型
+
+常见类型参数命名约定：
+
+- `T` Type 类型
+- `E` Element 元素（集合用）
+- `K` Key 键
+- `V` Value 值
+- `R` Return 返回值
+
+不知道是什么类型的代替
+
+泛型类` class A <T> `
+
+泛型方法`<T> void  add()`(写在返回值前面) 
+
+泛型接口` inferface B <T>`
+
+```
+T[] arr = new T[10]; // ❌
+// 可以这样（强制转换，有警告）
+T[] arr = (T[]) new Object[10];
+```
+
+ 读的时候用？
+
+定义的时候用类型参数
+
+# 协变、逆变、不变
+
+1. 不变（默认泛型）
+
+2. 协变 `? extends T` 能读不能改
+
+```java
+List<String> strList = new ArrayList<>();
+List<? extends Object> list = strList; // ✅ 协变，可以赋值
+Object o = list.get(0); // ✅ 读取
+list.add("abc"); // ❌ 编译报错，不知道里面真实是什么子类型
+```
+
+3. 逆变 `? super T` 
+
+`List<? super String>`，代表**String 或者 String 的父类**。
+
+- ✅ 可以存入 T 及其子类对象
+- ❌ 读取出来只能当成 Object
+
+```
+List<Object> objList = new ArrayList<>();
+List<? super String> list = objList; // ✅ 逆变，可以赋值
+list.add("hello"); // ✅ 可以放入String
+String s = list.get(0); // ❌ 不知道父类到底是谁，只能拿到Object
+Object o = list.get(0); // ✅
+```
+
+适用场景：**只写入数据，不读取** → Consumer，PECS 的 C。
+
+
 

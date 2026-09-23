@@ -17,15 +17,12 @@ public class Person {
         count++;
     }
 
-    private void eat() {
+    public void eat() {
         System.out.println(name + "正在吃东西");
     }
 
-    private void sleep() {
-
-    }
-
-    private void dadoudou() {
+    public void sleep() {
+        System.out.println(name + "正在睡觉");
 
     }
     public String getName() {
