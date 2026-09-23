@@ -98,6 +98,42 @@ write(read())
 
 write记得规定长度为len
 
+## 字符流
+
+## 对象序列化Serializable
+
+序列化保存的是**对象的成员变量的值**
+
+打开时乱码不可读
+
+### 写入
+
+```java
+try(
+    FileOutputStream fos = new FileOutputStream("student.data");
+    ObjectOutputStream oos = new ObjectOutputStream(fos);
+){
+    Student s = new Student("张三",18);
+    oos.writeObject(s); // 直接写入整个对象
+}catch (IOException e){
+    e.printStackTrace();
+}
+```
+
+### 读取对象（反序列化 ObjectInputStream）
+
+```java
+try(
+    FileInputStream fis = new FileInputStream("student.data");
+    ObjectInputStream ois = new ObjectInputStream(fis);
+){
+    Student stu = (Student) ois.readObject();
+    System.out.println(stu.name + " " + stu.age);
+}catch (IOException | ClassNotFoundException e){
+    e.printStackTrace();
+}
+```
+
 ## try-catch
 
 ```java
@@ -216,7 +252,9 @@ HasMapt为哈希表
 
 # 继承与接口
 
-接口弥补了java单继承的不足
+接口不能new
+
+接口弥补了java单继承的不足，使子类有多种多态
 
 承诺必须重写抽象方法
 
@@ -225,6 +263,30 @@ HasMapt为哈希表
 若没有实现，则子类实现即可
 
 父类方法调用优先级大于接口方法
+
+---
+
+函数式接口只能有一个抽象类
+
+```java
+@FunctionalInterface
+interface MyInterface {
+    // 抽象方法（只能最多一个）
+    void say();//自动补全public abstract
+
+    // default：有方法体，不是抽象方法！
+    default void test() {
+        System.out.println("default方法");
+    }
+
+    // static：有方法体，不是抽象方法！
+    static void staticTest() {
+        System.out.println("static方法");
+    }
+}
+```
+
+接口的成员变量自动补：`public static final int num = 10;`.
 
 # Integer
 
@@ -433,3 +495,10 @@ Object o = list.get(0); // ✅
 
 
 
+# 设计模式
+
+**简单模式**：常用于配置管理、日志记录、数据库连接池等场景，**全局只有一个对象**
+
+**工厂模式**：客户端不需要知道怎么new对象，只要告诉工厂要干什么，让工厂分辨new哪一个对象（有多个对象有相同性质）
+
+**建造者模式**：new对象的过程中有很多初始化参数，由build统一步骤，调用多个方法调整参数

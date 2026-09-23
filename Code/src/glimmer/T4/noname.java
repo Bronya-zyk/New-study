@@ -1,7 +1,6 @@
 package glimmer.T4;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.List;
 
 public class noname {

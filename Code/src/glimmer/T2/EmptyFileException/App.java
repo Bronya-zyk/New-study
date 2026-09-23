@@ -3,8 +3,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 public class App {
     public static void main(String[] args) throws Exception {
-        try(FileInputStream fis = new FileInputStream("Code/data.txt");) {
-            TestFile.readFile("Code/data.txt");
+        try(FileInputStream fis = new FileInputStream("src/glimmer/T2/data.txt");) {
+            TestFile.readFile("src/glimmer/T2/data.txt");
             int a=0,sum=0,tot=0;
             StringBuilder s = new StringBuilder();
             while((a=fis.read())!=-1){
