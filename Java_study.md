@@ -217,3 +217,30 @@ string转int
 若没有实现，则子类实现即可
 
 父类方法调用优先级大于接口方法
+
+# Integer
+
+List，set，map只支持包装类，所以把int转换为integer
+
+重点：integer会缓存-128~127的数
+
+即：
+
+```
+Integer a=100;
+Integer b=100;
+//a==b->true地址一样
+
+Integer c=200;
+Integer d=200;
+//c==d->false因为c和d是new的两个对象，两个对象地址不一样
+```
+
+# 增强for
+
+语法糖
+
+for(auto x:arr)
+
+注意遍历时不能改变集合
+
