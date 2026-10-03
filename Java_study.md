@@ -241,7 +241,7 @@ HasMapt为哈希表
 
 | 方法                                    | 作用                             |
 | --------------------------------------- | -------------------------------- |
-| `collect(Collectors.toList())`          | 收集成 List（你之前写的）        |
+| `collect(Collectors.toList())`          | 收集成 List                      |
 | `collect(Collectors.toSet())`           | 收集成 Set，自动去重             |
 | `collect(Collectors.toMap(key,value))`  | 收集成 Map                       |
 | `forEach()`                             | 遍历每一个元素                   |
@@ -463,7 +463,7 @@ T[] arr = (T[]) new Object[10];
 
 定义的时候用类型参数
 
-# 协变、逆变、不变
+# 协变、逆变、不变（还不太清楚）
 
 1. 不变（默认泛型）
 
